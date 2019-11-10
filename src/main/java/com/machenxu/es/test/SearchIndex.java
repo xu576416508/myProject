@@ -55,7 +55,7 @@ public class SearchIndex {
             //打印文档对象，以json格式输出
             System.out.println(searchHit.getSourceAsString());
             //取文档的属性
-            System.out.println("-----------文档的属 性");
+            System.out.println("-----------文档的属性");
             Map<String, Object> document = searchHit.getSource();
             System.out.println(document.get("id"));
             System.out.println(document.get("title"));
