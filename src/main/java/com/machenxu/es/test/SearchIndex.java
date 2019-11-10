@@ -1,4 +1,4 @@
-package com.machenxu.es;
+package com.machenxu.es.test;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
@@ -71,7 +71,7 @@ public class SearchIndex {
         //创建一个client对象
         //创建一个查询对象
         QueryBuilder queryBuilder = QueryBuilders.idsQuery().addIds("1", "2");
-        search(queryBuilder);
+        search(null);
     }
 
     @Test

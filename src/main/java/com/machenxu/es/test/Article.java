@@ -1,4 +1,4 @@
-package com.machenxu.es;
+package com.machenxu.es.test;
 
 public class Article {
     private long id;
