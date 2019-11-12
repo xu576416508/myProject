@@ -16,7 +16,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class SearchIndex {
@@ -30,19 +32,19 @@ public class SearchIndex {
                 .build();
         //创建一个TransPortClient对象
         client = new PreBuiltTransportClient(settings)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.0.105"), 9300));
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.124.65"), 9300));
 
     }
 
     private void search(QueryBuilder queryBuilder) throws Exception {
         //执行查询
-        SearchResponse searchResponse = client.prepareSearch("index_hello")
-                .setTypes("article")
+        SearchResponse searchResponse = client.prepareSearch("eslog4")
+                .setTypes("OdinLog")
                 .setQuery(queryBuilder)
                 //设置分页信息
-                .setFrom(0)
+                // .setFrom(0)
                 //每页显示的行数
-                .setSize(5)
+                // .setSize(5)
                 .get();
         //取查询结果
         SearchHits searchHits = searchResponse.getHits();
@@ -70,8 +72,23 @@ public class SearchIndex {
     public void testSearchById() throws Exception {
         //创建一个client对象
         //创建一个查询对象
-        QueryBuilder queryBuilder = QueryBuilders.idsQuery().addIds("1", "2");
-        search(null);
+        // QueryBuilder queryBuilder = QueryBuilders.idsQuery();
+        QueryBuilder queryBuilder = QueryBuilders.termQuery("biz", "汉字呢");//完全匹配
+        List<String> s =new ArrayList<>();
+        s.add("resource1");
+        s.add("resource13");
+        s.add("resource2");
+        // QueryBuilder queryBuilder = QueryBuilders.termsQuery("business", s);//多个匹配 in
+        /**
+         * 通配符查询, 支持 *
+         * 匹配任何字符序列, 包括空
+         * 避免* 开始, 会检索大量内容造成效率缓慢
+         */
+        //QueryBuilder queryBuilder = QueryBuilders.wildcardQuery("business","*esource1*")  ; //like
+        // QueryBuilder queryBuilder =QueryBuilders.rangeQuery("createTime") .from("2019-11-11 16:00:00").to("2019-11-11 17:00:00");
+        // QueryBuilder queryBuilder = QueryBuilders.queryStringQuery("odin-admi")
+        //      .defaultField("biz");
+        search(queryBuilder);
     }
 
     @Test
@@ -81,7 +98,7 @@ public class SearchIndex {
         //参数2：要搜索的关键词
         QueryBuilder queryBuilder = QueryBuilders.termQuery("title", "北方入秋速度明显加快 多地降温幅度最多可达10度22222");
         //执行查询
-        search(queryBuilder);
+        search(null);
     }
 
     @Test

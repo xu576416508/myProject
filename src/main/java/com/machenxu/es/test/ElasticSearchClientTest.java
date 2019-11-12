@@ -25,7 +25,7 @@ public class ElasticSearchClientTest {
                 .build();
         //创建一个TransPortClient对象
         client = new PreBuiltTransportClient(settings)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.0.105"), 9300));
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.124.65"), 9300));
 
     }
 
@@ -37,9 +37,9 @@ public class ElasticSearchClientTest {
                 .build();
         //创建一个TransPortClient对象
         client = new PreBuiltTransportClient(settings)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.0.105"), 9300));
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.124.65"), 9300));
         //3、使用client对象创建一个索引库
-        client.admin().indices().prepareCreate("index_hello")
+        client.admin().indices().prepareCreate("eslog4")
                 //执行操作
                 .get();
         //4、关闭client对象
@@ -54,7 +54,7 @@ public class ElasticSearchClientTest {
                 .build();
         //创建一个TransPortClient对象
         client = new PreBuiltTransportClient(settings)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.0.105"), 9300));
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.124.65"), 9300));
         //创建一个Mappings信息
         /*{
             "article":{
@@ -80,13 +80,72 @@ public class ElasticSearchClientTest {
         }*/
         XContentBuilder builder = XContentFactory.jsonBuilder()
                 .startObject()
-                    .startObject("article")
+                .startObject("OdinLog")
+                .startObject("properties")
+                .startObject("id")
+                .field("type", "string")
+                .field("index", "not_analyzed")
+                .endObject()
+                .startObject("biz")
+                .field("type", "string")
+                .endObject()
+                .startObject("business")
+                .field("type", "string")
+                .field("index", "not_analyzed")
+                .endObject()
+                .startObject("category")
+                .field("type", "string")
+                .field("index", "not_analyzed")
+                .endObject()
+                .startObject("param")
+                .field("type", "string")
+                .field("index", "not_analyzed")
+                .endObject()
+                .startObject("level")
+                .field("type", "string")
+                .field("index", "not_analyzed")
+                .endObject()
+                .startObject("content")
+                .field("type", "string")
+                .field("index", "not_analyzed")
+                .endObject()
+                .startObject("createTime")
+                .field("type", "date")
+                .field("format", "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis")
+                .endObject()
+                .endObject()
+                .endObject()
+                .endObject();
+/*
+        XContentBuilder builder = XContentFactory.jsonBuilder()
+                .startObject()
+                    .startObject("OdinLog")
                         .startObject("properties")
                             .startObject("id")
-                                .field("type","long")
+                                .field("type","text")
                                 .field("store", true)
                             .endObject()
-                            .startObject("title")
+                            .startObject("biz")
+                                .field("type", "text")
+                                .field("store", true)
+                            .endObject()
+                            .startObject("business")
+                                .field("type", "text")
+                                .field("store", true)
+                            .endObject()
+                            .startObject("category")
+                                .field("type", "text")
+                                .field("store", true)
+                            .endObject()
+                            .startObject("param")
+                                .field("type", "text")
+                                .field("store", true)
+                            .endObject()
+                            .startObject("level")
+                                .field("type", "text")
+                                .field("store", true)
+                            .endObject()
+                            .startObject("levelStr")
                                 .field("type", "text")
                                 .field("store", true)
                             .endObject()
@@ -94,15 +153,28 @@ public class ElasticSearchClientTest {
                                 .field("type", "text")
                                 .field("store", true)
                             .endObject()
+                            .startObject("createTime")
+                                .field("type", "text")
+                                .field("store", true)
+                            .endObject()
+                            .startObject("startTime")
+                                .field("type", "text")
+                                .field("store", true)
+                            .endObject()
+                            .startObject("endTime")
+                                .field("type", "text")
+                                .field("store", true)
+                            .endObject()
                         .endObject()
                     .endObject()
                 .endObject();
+*/
         //使用client把mapping信息设置到索引库中
         client.admin().indices()
                 //设置要做映射的索引
-                .preparePutMapping("index_hello")
+                .preparePutMapping("eslog4")
                 //设置要做映射的type
-                .setType("article")
+                .setType("OdinLog")
                 //mapping信息，可以是XContentBuilder对象可以是json格式的字符串
                 .setSource(builder)
                 //执行操作
@@ -117,8 +189,8 @@ public class ElasticSearchClientTest {
         //创建一个文档对象
         XContentBuilder builder = XContentFactory.jsonBuilder()
                 .startObject()
-                    .field("title","北方入秋速度明显加快 多地降温幅度最多可达10度22222")
-                    .field("content", "阿联酋一架客机在纽约机场被隔离 10名乘客病倒")
+                .field("title","北方入秋速度明显加快 多地降温幅度最多可达10度22222")
+                .field("content", "阿联酋一架客机在纽约机场被隔离 10名乘客病倒")
                 .endObject();
         //把文档对象添加到索引库
         client.prepareIndex()
@@ -139,17 +211,20 @@ public class ElasticSearchClientTest {
     @Test
     public void testAddDocument2() throws Exception {
         //创建一个Article对象
-        Article article = new Article();
+      /*  Article article = new Article();
         //设置对象的属性
         article.setId(3l);
         article.setTitle("MH370坠毁在柬埔寨密林?中国一公司调十颗卫星去拍摄");
-        article.setContent("警惕荒唐的死亡游戏!俄15岁少年输掉游戏后用电锯自杀");
+        article.setContent("警惕荒唐的死亡游戏!俄15岁少年输掉游戏后用电锯自杀");*/
+        Log l =new Log();
+        l.setBiz("测试log");
+        l.setBusiness("测试json");
         //把article对象转换成json格式的字符串。
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonDocument = objectMapper.writeValueAsString(article);
+        String jsonDocument = objectMapper.writeValueAsString(l);
         System.out.println(jsonDocument);
         //使用client对象把文档写入索引库
-        client.prepareIndex("index_hello","article", "3")
+        client.prepareIndex("eslog","log", "3")
                 .setSource(jsonDocument, XContentType.JSON)
                 .get();
         //关闭客户端
