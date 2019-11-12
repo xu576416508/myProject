@@ -12,7 +12,7 @@
         <maven.compiler.target>1.9</maven.compiler.target>
     </properties>
     <dependencies>
-        
+        <!--es-->
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
@@ -23,6 +23,7 @@
             <artifactId>transport</artifactId>
             <version>5.6.8</version>
         </dependency>
+        <!--es-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-to-slf4j</artifactId>
