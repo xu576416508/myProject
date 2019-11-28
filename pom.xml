@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.itheima</groupId>
-    <artifactId>es-first</artifactId>
+    <artifactId>myProject</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <maven.compiler.source>1.9</maven.compiler.source>
-        <maven.compiler.target>1.9</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
         <!--es-->
@@ -59,6 +59,50 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.9.0</version>
         </dependency>
+        <!--csv 读取jar-->
+        <dependency>
+            <groupId>net.sourceforge.javacsv</groupId>
+            <artifactId>javacsv</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <!--csv 读取jar-->
+        <!-- impala,hive start -->
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-jdbc</artifactId>
+            <version>1.1.0-cdh5.14.4</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/hive-jdbc-1.1.0-cdh5.14.4.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-metastore</artifactId>
+            <version>1.1.0-cdh5.14.4</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/hive-metastore-1.1.0-cdh5.14.4.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-exec</artifactId>
+            <version>1.1.0-cdh5.14.4</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/hive-exec-1.1.0-cdh5.14.4.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-service</artifactId>
+            <version>1.1.0-cdh5.14.4</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/hive-service-1.1.0-cdh5.14.4.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.cloudera.impala.jdbc</groupId>
+            <artifactId>ImpalaJDBC41</artifactId>
+            <version>2.5.41</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/ImpalaJDBC41-2.6.3.jar</systemPath>
+        </dependency>
+        <!-- impala,hive end -->
     </dependencies>
     
 </project>
