@@ -70,7 +70,7 @@
         <dependency>
             <groupId>org.apache.hive</groupId>
             <artifactId>hive-jdbc</artifactId>
-            <version>1.1.0-cdh5.14.4</version>
+            <version>2.3.4</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/hive-jdbc-1.1.0-cdh5.14.4.jar</systemPath>
         </dependency>
